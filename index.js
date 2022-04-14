@@ -2,14 +2,16 @@ const bombs=[];
 let gamePoints=0;
 let canPlay=true;
 
+
 function updateGamePoints(){
     const gamepointsElement=document.getElementById('gamePoints');
-    gamepointsElement.innerHTML = "Game Points" + gamePoints;
+    gamepointsElement.innerHTML = "Game Points :-" + gamePoints;
 }
 function addGrid(){
     const appElement=document.getElementById('app');
     for(let i=0; i<9; i++){
         const row=document.createElement('div');
+        row.style.display="flex";
         for(let j=0; j<9; j++){
             const index=i*9+j;
             row.style.display="flex";
@@ -29,14 +31,26 @@ function addGrid(){
                     if(bombs.includes(index)){
                         column.innerHTML = "bomb";
                         column.style.backgroundColor = "red";
+                        column.style.border="1px solid gold";
                         canPlay=false;
+                        document.getElementById("loss").innerHTML="You Loss";
+                        
                     }
+                    else if(gamePoints >= 50){
+                        document.getElementById("win").innerHTML="You Win";
+                    }
+                    
+                    
                     else{
+
                         column.style.backgroundColor = "green";
                         gamePoints++;
+                        
                         updateGamePoints();
+                        
                     }
                 }
+                
                 
             })
             row.appendChild(column);
@@ -44,6 +58,7 @@ function addGrid(){
         appElement.appendChild(row);
     }
 }
+
 
 function generateBombs(){
     while(bombs.length < 10){
@@ -57,3 +72,5 @@ function generateBombs(){
 addGrid();
 generateBombs();
 console.log(bombs);
+
+
